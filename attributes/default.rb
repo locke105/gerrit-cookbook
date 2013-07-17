@@ -49,3 +49,5 @@ if node.platform_family?(:rhel)
 else
   default['gerrit']['gitweb_path'] = "/usr/lib/cgi-bin/gitweb.cgi"
 end
+
+default['gerrit']['commentlinks'] = []

@@ -27,3 +27,8 @@
 [gitweb]
         cgi = <%= node['gerrit']['gitweb_path'] %>
 <% end %>
+<% node['gerrit']['commentlinks'].each do |commentlink| %>
+[commentlink "<%= commentlink['name'] %>"]
+        match = "<%= commentlink['match'] %>"
+        link = "<%= commentlink['link'] %>"
+<% end %>
