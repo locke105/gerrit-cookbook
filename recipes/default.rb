@@ -19,6 +19,22 @@
 
 require_recipe "database::mysql"
 
+# install Git (Gerrit expects it)
+include_recipe "git"
+
+# install RHEL6 openjdk6
+include_recipe "java::openjdk"
+
+# install/setup reverse proxy
+if node['gerrit']['proxy']
+  include_recipe "gerrit::proxy"
+end
+
+# install gitweb
+if node['gerrit']['gitweb']
+  package "gitweb"
+end
+
 gerrit_user_name = node['gerrit']['user']
 
 # setup group for user
@@ -37,19 +53,6 @@ end
 directory node['gerrit']['home'] do
   owner gerrit_user_name
   group gerrit_user_name
-end
-
-# install RHEL6 openjdk6
-include_recipe "java::openjdk"
-
-# install/setup reverse proxy
-if node['gerrit']['proxy']
-  include_recipe "gerrit::proxy"
-end
-
-# install gitweb
-if node['gerrit']['gitweb']
-  package "gitweb"
 end
 
 ### DB Setup ###
@@ -165,3 +168,6 @@ end
 
 # firewall setup
 include_recipe "gerrit::firewall"
+
+# cronjobs
+include_recipe "gerrit::cron"

@@ -6,7 +6,9 @@ description      "Installs/Configures Gerrit Code Review"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.3"
 
+depends "cron"
 depends "database"
+depends "git"
 depends "mysql"
 depends "java"
 depends "apache2"
