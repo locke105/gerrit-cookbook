@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-require_recipe "database::mysql"
+# install mysql client libs
+include_recipe "database::mysql"
 
 # install Git (Gerrit expects it)
 include_recipe "git"
@@ -145,7 +146,7 @@ end
 bash "gerrit-init" do
   user gerrit_user_name
   group gerrit_user_name
-  cwd "#{node['gerrit']['home']}"
+  cwd node['gerrit']['home']
   code "java -jar #{war_file_name} init --batch --no-auto-start -d #{node['gerrit']['home']}"
   action :nothing
   notifies :restart, "service[gerrit]"
