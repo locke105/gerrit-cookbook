@@ -8,17 +8,38 @@ a working Gerrit install up and running in no time. The cookbook
 does assume that you will be using MySQL as your backing database
 and does not currently support other DB backends.
 
-Platforms
-=========
+Requirements
+============
 
-This cookbook was built and tested on CentOS 6.3 and RHEL 6.4, but
-it will most likely work on other platforms. It utilizes many
-of the OpsCode cookbooks which have fairly good cross-platform support.
+## Platforms
 
-License
-=======
+* RHEL
+* CentOS
 
-Copyright 2013, Mathew Odden
+This cookbook was built and tested on CentOS 6.3 and RHEL 6.4
+
+Usage
+=====
+
+The default recipe will install Gerrit 2.4.2 and an Apache
+server instance to proxy requests to Gerrit. The default setup
+is usable out of the box if you put the mysql::server recipe
+before gerrit in your node runlist. Some attributes that you may
+want to override would be:
+
+* `node['gerrit']['database']['password']` - password for the gerrit user to access the database
+* `node['gerrit']['gitweb']` - set to true if you want gitweb support in Gerrit
+* `node['gerrit']['smtpServer']` - point Gerrit at your internal SMTP server for email notifications from Gerrit
+* `node['gerrit']['ssl_certificate']` - useful for configuring the Apache rproxy to serve Gerrit over HTTPS
+
+There are plenty more tweakables in attributes/default.rb
+
+License and Authors
+===================
+
+* Author:: Mathew Odden <locke105@gmail.com>
+
+* Copyright:: 2013, Mathew Odden
 
 Licensed under the Apache License, Version 2.0 (the 'License');
 you may not use this file except in compliance with the License.
